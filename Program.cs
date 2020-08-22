@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Discord.Commands;
+using Discord.WebSocket;
+
+using DiscordBot.BackgroundServices;
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -48,7 +53,13 @@ namespace DiscordBot
             configuration = LoadConfiguration();
 
             services.AddSingleton<IConfiguration>(configuration)
-                    .AddHttpClient();
+                    .AddHttpClient()
+                    .AddSingleton<DiscordSocketClient>()
+                    .AddSingleton<CommandService>()
+                    .AddSingleton<CommandHandler>()
+
+                    .AddHostedService<DiscordHandlerHostedService>()
+                    ;
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Loaded service: ");

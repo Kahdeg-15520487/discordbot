@@ -61,7 +61,9 @@ namespace DiscordBot
                 }
                 sb.AppendLine("-----");
 
-                if (module.Name == "KonLulu~")
+                //only print description from allowed module
+                //in case you have some kind of hidden module like administration or debug
+                if (module.Name == DiscordModule.MODULE_NAME)
                 {
                     help.AppendLine("```");
                     help.AppendLine(module.Name);
